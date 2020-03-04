@@ -6586,7 +6586,6 @@ public abstract class EuclidianController implements SpecialPointsListener {
     protected void setMouseLocToNullIfNeeded() {
         mouseLoc = null;
     }
-
 	protected void handleSelectClick(ArrayList<GeoElement> geos,
 			boolean ctrlDown) {
 		if (geos == null) {

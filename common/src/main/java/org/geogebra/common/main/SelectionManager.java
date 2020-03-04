@@ -696,7 +696,9 @@ public class SelectionManager {
 		}
 
 		GeoElement lastSelected = selectedGeos.get(selectionSize - 1);
-		GeoElement next = tree.higher(lastSelected);
+
+		GeoElement next = getTreeWithoutGroupOf(tree, lastSelected.getParentGroup())
+				.higher(lastSelected);
 
 		removeAllSelectedGeos();
 
@@ -707,6 +709,14 @@ public class SelectionManager {
 		}
 
 		return true;
+	}
+
+	private TreeSet<GeoElement> getTreeWithoutGroupOf(TreeSet<GeoElement> tree, Group group) {
+		if (group != null) {
+			tree.removeAll(group.getGroupedGeos());
+		}
+
+		return tree;
 	}
 
 	/**
@@ -736,6 +746,11 @@ public class SelectionManager {
 		GeoElement prev = tree.lower(lastSelected);
 		removeAllSelectedGeos();
 
+		Group lastGroup = lastSelected.getParentGroup();
+		if (lastGroup != null) {
+			tree.removeAll(lastGroup.getGroupedGeos());
+		}
+
 		if (prev != null) {
 			addSelectedGeoForEV(prev);
 		} else if (!getAccessibilityManager().onSelectFirstGeo(false)) {
@@ -760,7 +775,7 @@ public class SelectionManager {
 	 *            construction element
 	 */
 	public void addSelectedGeoForEV(GeoElement geo) {
-		addSelectedGeo(geo);
+		addSelectedGeoWithGroup(geo);
 
 		checkInputBoxAndFocus(geo);
 		App app1 = geo.getKernel().getApplication();
