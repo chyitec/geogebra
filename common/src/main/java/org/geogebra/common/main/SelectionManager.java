@@ -1270,5 +1270,26 @@ public class SelectionManager {
 			addSelectedGeos(group.getGroupedGeos(), true);
 		}
 	}
-}
 
+	/**
+	 * Removes or adds given geo and its group if any
+	 * to selection and repaints views
+	 *
+	 * @param geo
+	 *            geo to be added / removed
+	 */
+	final public void toggleSelectedGeoWithGroup(GeoElement geo) {
+		Group group = geo.getParentGroup();
+		if (group == null) {
+			toggleSelectedGeo(geo, true);
+		} else {
+			toggleSelectedGroup(group);
+		}
+	}
+
+	private void toggleSelectedGroup(Group group) {
+		for (GeoElement geo: group.getGroupedGeos()) {
+			toggleSelectedGeo(geo, true);
+		}
+	}
+}

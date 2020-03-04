@@ -6593,7 +6593,7 @@ public abstract class EuclidianController implements SpecialPointsListener {
 			selection.clearSelectedGeos();
 		} else {
 			if (ctrlDown) {
-				selection.toggleSelectedGeo(chooseGeo(geos, true));
+				selection.toggleSelectedGeoWithGroup(chooseGeo(geos, true));
 			} else {
 				Hits hits = new Hits();
 				hits.addAll(geos);
