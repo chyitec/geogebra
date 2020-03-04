@@ -6604,7 +6604,7 @@ public abstract class EuclidianController implements SpecialPointsListener {
 							previewPointHits = getPreviewSpecialPointHits(hits);
 						} else {
 							selection.clearSelectedGeos(false);
-							selection.addSelectedGeo(geo);
+							selection.addSelectedGeoWithGroup(geo);
 						}
 					}
 				} else {
@@ -10178,8 +10178,7 @@ public abstract class EuclidianController implements SpecialPointsListener {
 							&& !event.isRightClick()
 							&& lastSelectionToolGeoToRemove != null) {
 						selection.clearSelectedGeos(false, false);
-						selection.addSelectedGeo(lastSelectionToolGeoToRemove,
-								true, true);
+						selection.addSelectedGeoWithGroup(lastSelectionToolGeoToRemove);
 						view.setBoundingBox(((Drawable) view
 								.getDrawableFor(lastSelectionToolGeoToRemove))
 								.getBoundingBox());
