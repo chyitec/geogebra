@@ -697,8 +697,7 @@ public class SelectionManager {
 
 		GeoElement lastSelected = selectedGeos.get(selectionSize - 1);
 
-		GeoElement next = getTreeWithoutGroupOf(tree, lastSelected.getParentGroup())
-				.higher(lastSelected);
+		GeoElement next = getGroupLead(tree.higher(lastSelected));
 
 		removeAllSelectedGeos();
 
@@ -711,12 +710,12 @@ public class SelectionManager {
 		return true;
 	}
 
-	private TreeSet<GeoElement> getTreeWithoutGroupOf(TreeSet<GeoElement> tree, Group group) {
-		if (group != null) {
-			tree.removeAll(group.getGroupedGeos());
+	private GeoElement getGroupLead(GeoElement geo) {
+		Group group = geo == null ? null : geo.getParentGroup();
+		if (group == null) {
+			return geo;
 		}
-
-		return tree;
+		return group.getLead();
 	}
 
 	/**
@@ -743,7 +742,7 @@ public class SelectionManager {
 			return;
 		}
 		GeoElement lastSelected = selectedGeos.get(selectionSize - 1);
-		GeoElement prev = tree.lower(lastSelected);
+		GeoElement prev = getGroupLead(tree.lower(lastSelected));
 		removeAllSelectedGeos();
 
 		Group lastGroup = lastSelected.getParentGroup();
