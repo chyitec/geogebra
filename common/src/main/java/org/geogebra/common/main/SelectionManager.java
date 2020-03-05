@@ -695,9 +695,9 @@ public class SelectionManager {
 			return false;
 		}
 
-		GeoElement lastSelected = selectedGeos.get(selectionSize - 1);
+		GeoElement lastSelected = getGroupLead(selectedGeos.get(selectionSize - 1));
 
-		GeoElement next = getGroupLead(tree.higher(lastSelected));
+		GeoElement next = tree.higher(lastSelected);
 
 		removeAllSelectedGeos();
 
@@ -710,7 +710,7 @@ public class SelectionManager {
 		return true;
 	}
 
-	private GeoElement getGroupLead(GeoElement geo) {
+		private GeoElement getGroupLead(GeoElement geo) {
 		Group group = geo == null ? null : geo.getParentGroup();
 		if (group == null) {
 			return geo;
@@ -736,19 +736,15 @@ public class SelectionManager {
 		TreeSet<GeoElement> tree = getEVFilteredTabbingSet();
 
 		int selectionSize = selectedGeos.size();
-		GeoElement last = tree.last();
+		GeoElement last = getGroupLead(tree.last());
 		if (forceLast) {
 			addSelectedGeoForEV(last);
 			return;
 		}
-		GeoElement lastSelected = selectedGeos.get(selectionSize - 1);
-		GeoElement prev = getGroupLead(tree.lower(lastSelected));
-		removeAllSelectedGeos();
 
-		Group lastGroup = lastSelected.getParentGroup();
-		if (lastGroup != null) {
-			tree.removeAll(lastGroup.getGroupedGeos());
-		}
+		GeoElement lastSelected = getGroupLead(selectedGeos.get(selectionSize - 1));
+		GeoElement prev = tree.lower(lastSelected);
+		removeAllSelectedGeos();
 
 		if (prev != null) {
 			addSelectedGeoForEV(prev);
@@ -836,7 +832,7 @@ public class SelectionManager {
 			boolean remove = false;
 			// selectionAllowed arg only matters for axes; axes are not in
 			// construction
-			if (!geo.isSelectionAllowed(null)) {
+			if (!geo.isSelectionAllowed(null) || !geo.isLead()) {
 				remove = true;
 			} else {
 				boolean visibleInView = (app.showView(App.VIEW_EUCLIDIAN3D)
