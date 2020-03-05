@@ -711,7 +711,7 @@ public class SelectionManager {
 	}
 
 		private GeoElement getGroupLead(GeoElement geo) {
-		Group group = geo == null ? null : geo.getParentGroup();
+		Group group = geo.hasGroup() ? geo.getParentGroup() : null;
 		if (group == null) {
 			return geo;
 		}
@@ -726,7 +726,7 @@ public class SelectionManager {
 	 */
 	final public void selectLastGeo(EuclidianViewInterfaceCommon ev) {
 		boolean forceLast = false;
-		if (selectedGeos.size() != 1) {
+		if (selectedGeos.size() != 1 && !selectedGeos.get(0).hasGroup()) {
 			if (!getAccessibilityManager().handleTabExitGeos(false)) {
 				return;
 
@@ -1259,7 +1259,7 @@ public class SelectionManager {
 	public HashSet<Group> getSelectedGroups() {
 		HashSet<Group> selectedGroups = new HashSet<>();
 		for (GeoElement geo : selectedGeos) {
-			if (geo.getParentGroup() != null) {
+			if (geo.hasGroup()) {
 				selectedGroups.add(geo.getParentGroup());
 			}
 		}

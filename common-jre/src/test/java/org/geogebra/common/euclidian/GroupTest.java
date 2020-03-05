@@ -57,7 +57,7 @@ public class GroupTest {
 	}
 
 	private boolean isGeosInSameGroup(ArrayList<GeoElement> geos) {
-		if (geos.size() == 0 || geos.get(0).getParentGroup() == null) {
+		if (geos.size() == 0 || !geos.get(0).hasGroup()) {
 			return false;
 		}
 		Group group = geos.get(0).getParentGroup();
