@@ -1,5 +1,8 @@
 package org.geogebra.common.euclidian;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +29,7 @@ public class GroupTest {
 
 	@Test
 	public void testGeosNotGrupped() {
-		Assert.assertFalse(isGeosInSameGroup(withGivenNumberOfGeos(2)));
+		assertFalse(Group.isInSameGroup(withGivenNumberOfGeos(2)));
 	}
 
 	private ArrayList<GeoElement> withGivenNumberOfGeos(int count) {
@@ -43,7 +46,7 @@ public class GroupTest {
 	public void testCreateGroup() {
 		ArrayList<GeoElement> geos = withGivenNumberOfGeos(3);
 		construction.createGroup(geos);
-		Assert.assertTrue(isGeosInSameGroup(geos));
+		assertTrue(Group.isInSameGroup(geos));
 	}
 
 	@Test
@@ -53,27 +56,16 @@ public class GroupTest {
 		construction.createGroup(geos1);
 		construction.createGroup(geos2);
 		geos1.addAll(geos2);
-		Assert.assertFalse(isGeosInSameGroup(geos1));
+		assertFalse(Group.isInSameGroup(geos1));
 	}
 
-	private boolean isGeosInSameGroup(ArrayList<GeoElement> geos) {
-		if (geos.size() == 0 || !geos.get(0).hasGroup()) {
-			return false;
-		}
-		Group group = geos.get(0).getParentGroup();
-		for (int i = 1; i < geos.size(); i++) {
-			if (geos.get(i).getParentGroup() != group) {
-				return false;
-			}
-		}
-		return true;
-	}
+
 
 	@Test
 	public void testGrouppedGeos() {
 		ArrayList<GeoElement> geos = withGivenNumberOfGeos(5);
 		Group group = new Group(geos);
 		List<GeoElement> result = group.getGroupedGeos();
-		Assert.assertArrayEquals(geos.toArray(), result.toArray());
+		Assert.assertEquals(geos, result);
 	}
 }

@@ -93,4 +93,23 @@ public class Group {
     public boolean isLead(GeoElement geo) {
         return geo == lead;
     }
+
+    /**
+     *
+     * @param geos to check
+     * @return if all geos belongs to the same group
+     */
+    public static boolean isInSameGroup(ArrayList<GeoElement> geos) {
+        if (geos.size() == 0 || !geos.get(0).hasGroup()) {
+            return false;
+        }
+
+        Group group = geos.get(0).getParentGroup();
+        for (int i = 1; i < geos.size(); i++) {
+            if (geos.get(i).getParentGroup() != group) {
+                return false;
+            }
+        }
+        return true;
+    }
 }

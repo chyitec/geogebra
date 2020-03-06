@@ -38,20 +38,11 @@ public class GroupItems {
 	}
 
 	private boolean addGroupItem(GPopupMenuW popup) {
-		if (geos.size() >= 2 && allGeosNotInSingleGroup()) {
+		if (geos.size() >= 2 && !Group.isInSameGroup(geos)) {
 			popup.addItem(createGroupItem());
 			return true;
 		}
 		return false;
-	}
-
-	private boolean allGeosNotInSingleGroup() {
-		for (GeoElement geo : geos) {
-			if (!geo.hasGroup()) {
-				return true;
-			}
-		}
-		return app.getSelectionManager().getSelectedGroups().size() > 1 ? true : false;
 	}
 
 	private boolean addUngroupItem(GPopupMenuW popup) {

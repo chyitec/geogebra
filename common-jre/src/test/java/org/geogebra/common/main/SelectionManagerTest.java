@@ -1,6 +1,10 @@
 package org.geogebra.common.main;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import java.util.ArrayList;
+import java.util.Collections;
 
 import org.geogebra.common.BaseUnitTest;
 import org.geogebra.common.kernel.geos.GeoElement;
@@ -21,7 +25,7 @@ public class SelectionManagerTest extends BaseUnitTest {
 	@Test
 	public void hasNextShouldSkipInvisibleGeos() {
 		createSampleGeos();
-		Assert.assertTrue(selectionManager.hasNext(lookup("firstVisible")));
+		assertTrue(selectionManager.hasNext(lookup("firstVisible")));
 		Assert.assertFalse(selectionManager.hasNext(lookup("lastVisible")));
 	}
 
@@ -45,10 +49,10 @@ public class SelectionManagerTest extends BaseUnitTest {
 		selectionManager.addSelectedGeo(firstVisible);
 		// next jumps to second
 		selectionManager.selectNextGeo(getApp().getEuclidianView1());
-		Assert.assertTrue(lookup("lastVisible").isSelected());
+		assertTrue(lookup("lastVisible").isSelected());
 		// next jumps bacck to first
 		selectionManager.selectNextGeo(getApp().getEuclidianView1());
-		Assert.assertTrue(firstVisible.isSelected());
+		assertTrue(firstVisible.isSelected());
 	}
 
 	@Test
@@ -56,7 +60,7 @@ public class SelectionManagerTest extends BaseUnitTest {
 		ArrayList<GeoElement> geos = geosForGroup();
 		getKernel().getConstruction().createGroup(geos);
 		selectionManager.addSelectedGeoWithGroup(geos.get(0));
-		Assert.assertArrayEquals(geos.toArray(), selectionManager.getSelectedGeos().toArray());
+		assertEquals(geos, selectionManager.getSelectedGeos());
 	}
 
 	@Test
@@ -64,27 +68,25 @@ public class SelectionManagerTest extends BaseUnitTest {
 		ArrayList<GeoElement> geos = geosForGroup();
 		getKernel().getConstruction().createGroup(geos);
 		selectionManager.addSelectedGeoWithGroup(geos.get(0));
-		Assert.assertArrayEquals(geos.toArray(), selectionManager.getSelectedGeos().toArray());
+		assertEquals(geos, selectionManager.getSelectedGeos());
 		selectionManager.toggleSelectedGeoWithGroup(geos.get(0));
-		Assert.assertTrue(selectionManager.getSelectedGeos().isEmpty());
+		assertTrue(selectionManager.getSelectedGeos().isEmpty());
 	}
 
 	@Test
 	public void selectGeoIfNoGroup() {
 		GeoElement geo = new GeoPolygon(getKernel().getConstruction());
 		selectionManager.addSelectedGeoWithGroup(geo);
-		Assert.assertArrayEquals(new GeoElement[] {geo},
-				selectionManager.getSelectedGeos().toArray());
+		assertEquals(Collections.singletonList(geo), selectionManager.getSelectedGeos());
 	}
 
 	@Test
 	public void toggleGeoIfNoGroup() {
 		GeoElement geo = new GeoPolygon(getKernel().getConstruction());
 		selectionManager.addSelectedGeoWithGroup(geo);
-		Assert.assertArrayEquals(new GeoElement[] {geo},
-				selectionManager.getSelectedGeos().toArray());
+		assertEquals(Collections.singletonList(geo), selectionManager.getSelectedGeos());
 		selectionManager.toggleSelectedGeoWithGroup(geo);
-		Assert.assertTrue(selectionManager.getSelectedGeos().isEmpty());
+		assertTrue(selectionManager.getSelectedGeos().isEmpty());
 	}
 
 	private ArrayList<GeoElement> geosForGroup() {

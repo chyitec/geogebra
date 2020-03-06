@@ -711,10 +711,11 @@ public class SelectionManager {
 	}
 
 		private GeoElement getGroupLead(GeoElement geo) {
-		Group group = geo.hasGroup() ? geo.getParentGroup() : null;
+		Group group = geo.getParentGroup();
 		if (group == null) {
 			return geo;
 		}
+
 		return group.getLead();
 	}
 
