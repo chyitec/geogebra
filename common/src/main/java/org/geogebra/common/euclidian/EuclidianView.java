@@ -6522,6 +6522,10 @@ public abstract class EuclidianView implements EuclidianViewInterfaceCommon,
 		}
 	}
 
+	public SymbolicEditor getSymbolicEditor(){
+		return symbolicEditor;
+	}
+
 	/**
 	 * Hides the symbolic editor of EV input fields
 	 */
