@@ -6522,7 +6522,7 @@ public abstract class EuclidianView implements EuclidianViewInterfaceCommon,
 		}
 	}
 
-	public SymbolicEditor getSymbolicEditor(){
+	public SymbolicEditor getSymbolicEditor() {
 		return symbolicEditor;
 	}
 

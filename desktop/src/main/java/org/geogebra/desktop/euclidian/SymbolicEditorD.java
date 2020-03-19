@@ -41,7 +41,7 @@ public class SymbolicEditorD extends SymbolicEditor {
 	@Override
 	protected void applyChanges() {
 		super.applyChanges();
-		geoInputBox.labelOffsetY = (int) (baseline - box.getHeight() / 2);
+		geoInputBox.labelOffsetY = (int) (baseline - box.getHeight() / 2.0);
 		drawInputBox.update();
 	}
 

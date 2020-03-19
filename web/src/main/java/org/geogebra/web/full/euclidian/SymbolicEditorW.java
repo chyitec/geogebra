@@ -19,9 +19,6 @@ import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
-import com.himamis.retex.editor.share.editor.MathFieldInternal;
-import com.himamis.retex.editor.share.model.MathFormula;
-import com.himamis.retex.editor.share.serializer.TeXSerializer;
 
 /**
  * MathField-capable editor for EV, Web implementation.
@@ -72,7 +69,7 @@ public class SymbolicEditorW extends SymbolicEditor implements HasMathKeyboardLi
 
 	@Override
 	public void repaintBox(GGraphics2D g2) {
-
+		// only in desktop
 	}
 
 	@Override
