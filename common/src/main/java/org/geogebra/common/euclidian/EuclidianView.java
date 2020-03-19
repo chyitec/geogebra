@@ -2147,6 +2147,7 @@ public abstract class EuclidianView implements EuclidianViewInterfaceCommon,
 		if (getEuclidianController().isDraggingBeyondThreshold()) {
 			return false;
 		}
+
 		for (Drawable d : allDrawableList) {
 			if ((d.isCanvasDrawable())
 					&& (d.hit(x, y, app.getCapturingThreshold(type))
@@ -2161,7 +2162,6 @@ public abstract class EuclidianView implements EuclidianViewInterfaceCommon,
 				}
 
 				((CanvasDrawable) d).setWidgetVisible(false);
-
 			}
 		}
 
